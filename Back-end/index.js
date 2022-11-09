@@ -25,8 +25,7 @@ io.on("connection", (socket) => {
   socket.on("send_message", (data) => {
     console.log("send_message", data);
 
-    let sendMssage = socket.to("123");
-    socket.to("123").emit("receive_message", data);
+    socket.to(data.room).emit("receive_message", data);
   });
 
   socket.on("disconnect", () => {
