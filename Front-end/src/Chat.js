@@ -1,3 +1,4 @@
+import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 
@@ -32,12 +33,16 @@ function Chat({ socket, username, room }) {
 
   return (
     <div className="chat-window">
-      <div className="chat-header">
-        <p>Live Chat</p>
-      </div>
+      <Box
+        width="100%"
+        height="45px"
+        borderTopRadius="6px"
+        bgGradient="linear(to-t, purple.300, purple.600)"
+      >
+          <Text class="chat-header" color="white">Live Chat</Text>
+      </Box>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
-          {console.log("messageList", messageList)}
           {messageList.map((messageContent) => {
             return (
               <div
