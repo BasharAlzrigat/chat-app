@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Button, StackDivider, Text, VStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 
@@ -37,45 +37,53 @@ function Chat({ socket, username, room }) {
         width="100%"
         height="45px"
         borderTopRadius="6px"
-        bgGradient="linear(to-t, purple.300, purple.600)"
+        bg="heavyPurple"
       >
-          <Text class="chat-header" color="white">Live Chat</Text>
+        <Text class="chat-header" color="white">
+          Live Chat
+        </Text>
       </Box>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
-          {messageList.map((messageContent) => {
-            return (
-              <div
-                className="message"
-                id={username === messageContent.author ? "you" : "other"}
-              >
-                <div>
-                  <div className="message-content">
-                    <p>{messageContent.message}</p>
-                  </div>
-                  <div className="message-meta">
-                    <p id="time">{messageContent.time}</p>
-                    <p id="author">{messageContent.author}</p>
+          <VStack
+            divider={<StackDivider borderColor="gray.200" />}
+            spacing={2}
+            align="stretch"
+          >
+            {messageList.map((messageContent) => {
+              return (
+                <div
+                  className="message"
+                  id={username === messageContent.author ? "you" : "other"}
+                >
+                  <div>
+                    <div className="message-content">
+                      <p>{messageContent.message}</p>
+                    </div>
+                    <div className="message-meta">
+                      <p id="time">{messageContent.time}</p>
+                      <p id="author">{messageContent.author}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </VStack>
         </ScrollToBottom>
       </div>
       <div className="chat-footer">
-        <input
-          type="text"
-          value={currentMessage}
-          placeholder="Hey..."
-          onChange={(event) => {
-            setCurrentMessage(event.target.value);
-          }}
-          onKeyPress={(event) => {
-            event.key === "Enter" && sendMessage();
-          }}
-        />
-        <button onClick={sendMessage}>&#9658;</button>
+          <input
+            type="text"
+            value={currentMessage}
+            placeholder="Hey..."
+            onChange={(event) => {
+              setCurrentMessage(event.target.value);
+            }}
+            onKeyPress={(event) => {
+              event.key === "Enter" && sendMessage();
+            }}
+          />
+          <Button onClick={sendMessage}>&#9658;</Button>
       </div>
     </div>
   );
