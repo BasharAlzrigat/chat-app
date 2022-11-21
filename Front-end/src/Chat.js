@@ -1,10 +1,13 @@
 import { Box, Button, StackDivider, Text, VStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import { useDispatch, useSelector } from "react-redux";
+import { changeCurrentMessage, changeMessageList } from "./redux/chatSlice";
 
 function Chat({ socket, username, room }) {
-  const [currentMessage, setCurrentMessage] = useState("");
-  const [messageList, setMessageList] = useState([]);
+
+  const dispatch = useDispatch();
+  const { currentMessage, messageList } = useSelector((state) => state.chat);
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
@@ -19,26 +22,21 @@ function Chat({ socket, username, room }) {
       };
 
       await socket.emit("send_message", messageData);
-      setMessageList((list) => [...list, messageData]);
-      setCurrentMessage("");
+      dispatch(changeMessageList(messageData));
+      dispatch(changeCurrentMessage(""));
     }
   };
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
       console.log("receive_message!!!!", data);
-      setMessageList((list) => [...list, data]);
+      dispatch(changeMessageList(data));
     });
   }, [socket]);
 
   return (
     <div className="chat-window">
-      <Box
-        width="100%"
-        height="45px"
-        borderTopRadius="6px"
-        bg="heavyPurple"
-      >
+      <Box width="100%" height="45px" borderTopRadius="6px" bg="heavyPurple">
         <Text class="chat-header" color="white">
           Live Chat
         </Text>
@@ -72,18 +70,18 @@ function Chat({ socket, username, room }) {
         </ScrollToBottom>
       </div>
       <div className="chat-footer">
-          <input
-            type="text"
-            value={currentMessage}
-            placeholder="Hey..."
-            onChange={(event) => {
-              setCurrentMessage(event.target.value);
-            }}
-            onKeyPress={(event) => {
-              event.key === "Enter" && sendMessage();
-            }}
-          />
-          <Button onClick={sendMessage}>&#9658;</Button>
+        <input
+          type="text"
+          value={currentMessage}
+          placeholder="Hey..."
+          onChange={(event) => {
+            dispatch(changeCurrentMessage(event.target.value));
+          }}
+          onKeyPress={(event) => {
+            event.key === "Enter" && sendMessage();
+          }}
+        />
+        <Button onClick={sendMessage}>&#9658;</Button>
       </div>
     </div>
   );

@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import store from "./redux/store"
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { Provider } from "react-redux";
 // import reportWebVitals from "./reportWebVitals";
 
 const theme = extendTheme({
@@ -37,9 +39,9 @@ const theme = extendTheme({
           outline: "none",
           fontSize: "25px",
           color: "lightgray",
-          _hover:{
+          _hover: {
             color: "#5F4BB6",
-          }
+          },
         },
       },
     },
@@ -52,9 +54,11 @@ const theme = extendTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <App />
-    </ChakraProvider>
+    <Provider store={store}>
+      <ChakraProvider theme={theme}>
+        <App />
+      </ChakraProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

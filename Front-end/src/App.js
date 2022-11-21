@@ -3,12 +3,15 @@ import io from "socket.io-client";
 import { useState } from "react";
 import Chat from "./Chat";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { changeRoom, changeUsername } from "./redux/chatSlice";
 
 const socket = io.connect("https://chat-app-back-end-heroku.herokuapp.com/");
 
 function App() {
-  const [username, setUsername] = useState("");
-  const [room, setRoom] = useState("");
+  const { username, room } = useSelector((state) => state.chat);
+  const dispatch = useDispatch();
+
   const [showForm, setShowForm] = useState(true);
 
   const joinRoom = () => {
@@ -38,19 +41,18 @@ function App() {
                   type="text"
                   placeholder="John..."
                   onChange={(event) => {
-                    setUsername(event.target.value);
+                    dispatch(changeUsername(event.target.value));
                   }}
                 />
                 <input
                   type="text"
                   placeholder="Room ID..."
                   onChange={(event) => {
-                    setRoom(event.target.value);
+                    dispatch(changeRoom(event.target.value));
                   }}
                 />
                 <Button
-                variant="joinRoom"
-                  // class="joinroombtn"
+                  variant="joinRoom"
                   onClick={joinRoom}
                 >
                   Join A Room
