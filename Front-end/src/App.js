@@ -4,12 +4,12 @@ import { useState } from "react";
 import Chat from "./Chat";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeRoom, changeUsername } from "./redux/chatSlice";
+import { changeRoom, changeUsername } from "./redux/joinFormSlice";
 
 const socket = io.connect("https://chat-app-back-end-heroku.herokuapp.com/");
 
 function App() {
-  const { username, room } = useSelector((state) => state.chat);
+  const { username, room } = useSelector((state) => state.joinForm);
   const dispatch = useDispatch();
 
   const [showForm, setShowForm] = useState(true);

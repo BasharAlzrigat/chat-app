@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {
+  HandlechangeCurrentMessage,
+  HandlechangeMessageList,
+} from "./actionsHandlers";
 
 const chatState = {
-  username: "",
-  room: "",
   currentMessage: "",
   messageList: [],
 };
@@ -10,39 +12,17 @@ const chatState = {
 const initialState = chatState;
 
 export const chatSlice = createSlice({
-  name: "context",
+  name: "chat",
   initialState,
   reducers: {
-    changeUsername: (state, action) => {
-      return {
-        ...state,
-        username: action.payload,
-      };
-    },
-    changeRoom: (state, action) => {
-      return {
-        ...state,
-        room: action.payload,
-      };
-    },
-    changeCurrentMessage: (state, action) => {
-      return {
-        ...state,
-        currentMessage: action.payload,
-      };
-    },
-    changeMessageList: (state, action) => {
-      return {
-        ...state,
-        messageList: [...state.messageList, action.payload],
-      };
-    },
+    changeCurrentMessage: (state, action) =>
+      HandlechangeCurrentMessage(state, action),
+    changeMessageList: (state, action) =>
+      HandlechangeMessageList(state, action),
   },
 });
 
 export const {
-  changeUsername,
-  changeRoom,
   changeCurrentMessage,
   changeMessageList,
 } = chatSlice.actions;
