@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, StackDivider, Text, VStack } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import { useDispatch, useSelector } from "react-redux";
 import { changeCurrentMessage, changeMessageList } from "./redux/chatSlice";
