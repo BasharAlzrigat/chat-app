@@ -12,7 +12,7 @@ const io = new Server(server, {
     origin: "*",
     methods: ["GET", "POST"],
   },
-});                     
+});          
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
@@ -35,4 +35,9 @@ io.on("connection", (socket) => {
 
 server.listen(PORT, () => {
   console.log("SERVER RUNNING!");
+});
+
+//  Home api
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
