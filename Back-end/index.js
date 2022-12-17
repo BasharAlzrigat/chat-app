@@ -34,5 +34,5 @@ io.on("connection", (socket) => {
 });
 
 server.listen(PORT, () => {
-  console.log("SERVER RUNNING");
+  console.log("SERVER RUNNING!");
 });
